@@ -1,5 +1,16 @@
-#mainheader {
+Header {
     dock: top;
     height: 3;
     align: center middle;
+}
+
+#username {
+    align: left middle;
+    border: solid white;
+    width: auto;
+    padding: 0 2;
+}
+
+Footer {
+    dock: bottom;
 }
