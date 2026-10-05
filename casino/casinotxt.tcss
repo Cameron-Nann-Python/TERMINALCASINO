@@ -1,0 +1,5 @@
+#mainheader {
+    dock: top;
+    height: 3;
+    align: center middle;
+}
