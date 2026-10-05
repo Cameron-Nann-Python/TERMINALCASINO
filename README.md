@@ -22,6 +22,14 @@ pip install -r requirements.txt
 ```
 python -m casino.main
 ```
+5. Execute the following command to run the textual UI:
+```
+python -m casino.maintxt
+```
+6. Execute the following command to run the textual UI with realtime CSS updates:
+```
+textual run --dev casino.maintxt:TerminalCasinoApp
+```
 
 ## Roadmap
 

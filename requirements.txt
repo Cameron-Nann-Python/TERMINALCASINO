@@ -14,3 +14,5 @@ setuptools==84.0.0
 tomli==2.4.1
 wheel==0.48.0
 zensical==0.0.57
+textual==8.2.8
+textual-dev==1.8.0
