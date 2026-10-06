@@ -4,6 +4,7 @@ from textual.widgets import Header, Footer, Input, Label, Button, Static
 from textual.screen import Screen, ModalScreen
 from textual.containers import VerticalScroll, Container, Horizontal
 from textual.binding import Binding
+from typing import cast
 
 import shutil
 from typing import Callable
@@ -49,22 +50,26 @@ class HomeScreen(Screen):
                 yield Static("", id="spacer")
                 yield Label(str(ACCOUNT_STARTING_BALANCE), id="account_balance")
             with Container(id="game_content"):
-                yield Button("BlackJack (US)", id="black_jack_us", classes="games")
+                yield Label("Please choose a game to play:", id="choose_game_prompt")
+                for i, game in enumerate(ALL_GAMES):
+                    yield Button(game.capitalize(), id=f"game_{i+1}", classes="games")
+                    i += 1
 
             yield Footer()
 
     def set_username(self, username):
         self.query_one("#username", Label).update(username)
-        # app = cast(TerminalCasinoApp, self.app)
+        app = cast(TerminalCasinoApp, self.app) # cast for realtime css updates
         app.username = username
 
     def on_mount(self):
         self.title = "♦ T E R M I N A L  C A S I N O ♦"
         self.app.push_screen(GetUserName(), self.set_username)
 
-    @on(Button.Pressed, "#black_jack_us")
-    def play_blackjack_us(self):
-        app.selected_game = "1"
+    @on(Button.Pressed)
+    def play_game(self, event: Button.Pressed):
+        app = cast(TerminalCasinoApp, self.app)
+        app.selected_game = str(event.button.id)[-1]
         self.app.exit()
 
 class TerminalCasinoApp(App):
@@ -92,10 +97,10 @@ class TerminalCasinoApp(App):
 if __name__ == "__main__":
     app = TerminalCasinoApp()
     app.run()
+    name = app.username
+    account = Account.generate(name, ACCOUNT_STARTING_BALANCE)
 
-    def play_game(result):
-        name = app.username
-        account = Account.generate(name, ACCOUNT_STARTING_BALANCE)
+    def play_game(result, account):
         config = Config.default()
         ctx = GameContext(account=account, config=config)
         selected_game = ALL_GAMES[int(result) - 1]
@@ -104,4 +109,4 @@ if __name__ == "__main__":
             clear_screen()
             handler(ctx)  # returns to loop after game finishes
 
-    play_game(app.selected_game)
+    play_game(app.selected_game, account)

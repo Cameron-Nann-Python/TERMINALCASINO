@@ -17,10 +17,12 @@ Header {
     padding: 0 2;
 }
 
+/*Empty space between username and balance*/
 #spacer {
     width: 1fr;
 }
 
+/*Styles the account balance box*/
 #account_balance {
     align: right middle;
     border: solid white;

@@ -30,6 +30,7 @@ python -m casino.maintxt
 ```
 textual run --dev casino.maintxt:TerminalCasinoApp
 ```
+Note: Cannot open games with this mode: use command from step 5
 
 ## Roadmap
 
